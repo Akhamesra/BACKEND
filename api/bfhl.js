@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(cors({
-    origin: ['https://frontend-173q.vercel.app'], // Replace with your actual frontend domain
-  }));
-app.use(bodyParser.json());
+    origin: 'https://frontend-173q.vercel.app', 
+    methods: ['GET', 'POST'], // Specify allowed methods
+}));
+app.options('/bfhl', cors());
 
 function processData(data) {
     const numbers = [];
