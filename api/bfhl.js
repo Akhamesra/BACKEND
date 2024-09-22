@@ -3,7 +3,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: ['https://frontend-173q.vercel.app'], // Replace with your actual frontend domain
+  }));
 app.use(bodyParser.json());
 
 function processData(data) {
