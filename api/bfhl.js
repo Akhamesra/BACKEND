@@ -3,9 +3,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 
+// Enable CORS for all origins
 app.use(cors({
-    origin: '*', 
+    origin: '*', // Allows all origins
+    methods: ['GET', 'POST', 'OPTIONS'], // Allows specific methods
+    allowedHeaders: ['Content-Type'], // Allows specific headers
 }));
+
+app.use(bodyParser.json());
 
 function processData(data) {
     const numbers = [];
@@ -40,6 +45,12 @@ function validateFile(fileB64) {
 }
 
 module.exports = (req, res) => {
+    if (req.method === 'OPTIONS') {
+        // Handle preflight requests
+        res.status(200).end();
+        return;
+    }
+
     if (req.method === 'POST') {
         try {
             const data = req.body.data;
