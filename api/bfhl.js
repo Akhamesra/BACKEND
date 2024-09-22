@@ -4,11 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Enable CORS for all origins
-app.use(cors({
-    origin: '*', // Allows all origins
-    methods: ['GET', 'POST', 'OPTIONS'], // Allows specific methods
-    allowedHeaders: ['Content-Type'], // Allows specific headers
-}));
+app.use(cors());
 
 app.use(bodyParser.json());
 
@@ -27,8 +23,13 @@ function processData(data) {
 
 function findHighestLowercase(alphabets) {
     const lowercase = alphabets.filter(ch => ch === ch.toLowerCase());
-    return lowercase.length > 0 ? [Math.max(...lowercase)] : [];
+    if (lowercase.length > 0) {
+        const maxChar = lowercase.reduce((max, current) => current > max ? current : max);
+        return [maxChar];
+    }
+    return [];
 }
+
 
 function validateFile(fileB64) {
     if (!fileB64) {
@@ -45,8 +46,11 @@ function validateFile(fileB64) {
 }
 
 module.exports = (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
     if (req.method === 'OPTIONS') {
-        // Handle preflight requests
         res.status(200).end();
         return;
     }
