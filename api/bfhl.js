@@ -5,9 +5,7 @@ const app = express();
 
 app.use(cors({
     origin: '*', 
-    methods: ['GET', 'POST'], // Specify allowed methods
 }));
-app.options('/bfhl', cors());
 
 function processData(data) {
     const numbers = [];
