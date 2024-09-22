@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(cors({
-    origin: 'https://frontend-173q.vercel.app', 
+    origin: '*', 
     methods: ['GET', 'POST'], // Specify allowed methods
 }));
 app.options('/bfhl', cors());
